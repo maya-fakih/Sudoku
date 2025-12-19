@@ -1,6 +1,7 @@
 # main.py
 
 import numpy as np
+import time
 from sudoku import CSP_Sudoku
 
 # =======================
@@ -43,6 +44,21 @@ HARD = [
     [-1,-1,-1,-1,4,-1,-1,-1,9]
 ]
 
+EXTREME = [
+    [-1,-1,-1,-1,-1,-1, 2,-1,-1],
+    [-1, 8,-1,-1,-1, 7,-1, 9,-1],
+    [ 6,-1, 2,-1,-1,-1, 5,-1,-1],
+
+    [-1, 7,-1,-1, 6,-1,-1,-1,-1],
+    [-1,-1,-1, 9,-1, 1,-1,-1,-1],
+    [-1,-1,-1,-1, 2,-1,-1, 4,-1],
+
+    [-1,-1, 5,-1,-1,-1, 6,-1, 3],
+    [-1, 9,-1, 4,-1,-1,-1, 7,-1],
+    [-1,-1, 6,-1,-1,-1,-1,-1,-1]
+]
+
+
 # =======================
 # Main Function
 # =======================
@@ -52,6 +68,7 @@ def main():
     print("1 - Easy")
     print("2 - Medium")
     print("3 - Hard")
+    print("4 - Extreme")
 
     choice = input("Enter choice: ")
 
@@ -61,6 +78,8 @@ def main():
         board = MEDIUM
     elif choice == "3":
         board = HARD
+    elif choice == "4":
+        board = EXTREME
     else:
         print("Invalid choice")
         return
@@ -69,14 +88,18 @@ def main():
     print(np.array(board))
 
     agent = CSP_Sudoku(board)
+
+    start_time = time.time()
     solvable, solution = agent.solve()
+    end_time = time.time()
 
     print("\nSolvable:", solvable)
+
     if solvable:
         print("Solved Board:")
         print(np.array(solution))
-    else:
-        print("No solution exists.")
+
+    print(f"\nExecution Time: {end_time - start_time:.4f} seconds")
 
 # =======================
 # Run Program
